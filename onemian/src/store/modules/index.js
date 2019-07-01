@@ -3,24 +3,35 @@ const state = {
     latitude: '23.099994',
     list:[{
         title:"未开始",
-        flag:true
+        flag:true,
+        key:-1
     },{
-        title:"未打卡",
-        flag:false
+        title:"已打卡",
+        flag:false,
+        key:0,
     },{
-        title:"未放弃",
-        flag:false
+        title:"已放弃",
+        flag:false,
+        key:1,
     },{
         title:"全部",
-        flag:false
-    }]
+        flag:false,
+        key:2
+    }],
 }
 
 const mutations = {
     upGetLocation(state,payload){
         state.longitude = payload.longitude;
         state.latitude = payload.latitude;
-    }
+    },
+    upIndex(state,payload){
+        state.key = state.list[payload.payload].key;
+        state.list.map(item=>{
+            item.flag = false;
+        })
+        state.list[payload.payload].flag = true;
+    },
 }
 
 const actions = {

@@ -1,6 +1,9 @@
 <script>
+import { login } from "./request/index";
+import {mapMutations} from 'vuex';
+
 export default {
-  created () {
+  created() {
     // 调用API从本地缓存中获取数据
     /*
      * 平台 api 差异的处理方式:  api 方法统一挂载到 mpvue 名称空间, 平台判断通过 mpvuePlatform 特征字符串
@@ -9,25 +12,51 @@ export default {
      * 百度：mpvue === swan, mpvuePlatform === 'swan'
      * 支付宝(蚂蚁)：mpvue === my, mpvuePlatform === 'my'
      */
+          
 
-    let logs
-    if (mpvuePlatform === 'my') {
-      logs = mpvue.getStorageSync({key: 'logs'}).data || []
-      logs.unshift(Date.now())
-      mpvue.setStorageSync({
-        key: 'logs',
-        data: logs
+        wx.login({
+        success: async res=>{
+          console.log('res...', res);
+          let data = await login(res.code);
+          console.log(data)
+          this.updateState(data.data);
+          wx.setStorageSync('openid', data.data.openid);
+        }
       })
-    } else {
-      logs = mpvue.getStorageSync('logs') || []
-      logs.unshift(Date.now())
-      mpvue.setStorageSync('logs', logs)
-    }
+
+
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting["scope.record"]) {
+          wx.authorize({
+            scope: "scope.record",
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+              wx.startRecord();
+            }
+          });
+        } else {
+          wx.authorize({
+            scode: "scope.userInfo",
+            success: () => {
+              wx.getUserInfo();
+            },
+            fail: () => {
+              wx.openSetting();
+            }
+          });
+        }
+        // console.log(res)
+      }
+    });
   },
-  log () {
-    console.log(`log at:${Date.now()}`)
+
+    methods: {
+    ...mapMutations({
+      updateState: 'updateState'
+    })
   }
-}
+};
 </script>
 
 <style>

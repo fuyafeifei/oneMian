@@ -1,10 +1,6 @@
 <template>
     <div class="wrapper">
         <div class="wrapTop">
-            <!-- <div class="active">未开始</div>
-            <div>未打卡</div>
-            <div>未放弃</div>
-            <div>全部</div> -->
             <div v-for="(item,index) in list" 
                 :key="index" 
                 :class="item.flag?'active':''" 
@@ -13,7 +9,7 @@
             </div>
         </div>
         <div>
-            当前分类还没有面试！
+           你目前分类里没有面试信息呦！！！
         </div>
     </div>
 </template>
@@ -33,14 +29,23 @@ export default {
         })
     },
     methods:{
-        tab(index){
-            // this.getIndex();
-        },
+
+                tab(index){
+            this.index = index;
+            this.$store.commit({
+                type:"index/upIndex",
+                payload:index
+            })
+                }
+        // tab(index){
+        //     // this.getIndex();
+        // },
         // ...mapActions({
         //     store.get
         //     getIndex:("index/getIndex",1),
         // })
-        
+
+
     }
 
 }

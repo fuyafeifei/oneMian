@@ -4,7 +4,7 @@
             <div class="wrapImg">
                 <img src="../../../static/images/user.png" alt="" />
             </div>
-            <div class="wrapUser">151****3061</div>
+            <div class="wrapUser">************</div>
         </div>
         <div class="wrap">
             <div class="wrapItem">
