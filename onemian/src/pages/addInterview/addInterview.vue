@@ -4,7 +4,7 @@
         <div class="wrap">
             <div class="wrapItem">
                 <p>公司名称</p>
-                <input type="text" placeholder="请输入公司名称">
+                <input @input="mingCheng" type="text" placeholder="请输入公司名称">
             </div>
             <div class="wrapItem">
                 <p>公司电话</p>
@@ -59,6 +59,9 @@ export default {
                 title: '成功',
                 duration: 2000
             })
+        },
+        mingCheng(res){
+            console.log(res)
         }
     }
 }
