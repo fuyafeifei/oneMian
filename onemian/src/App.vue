@@ -16,39 +16,13 @@ export default {
 
         wx.login({
         success: async res=>{
-          console.log('res...', res);
+          // console.log('res...', res);
           let data = await login(res.code);
-          console.log(data)
+          // console.log(data)
           this.updateState(data.data);
           wx.setStorageSync('openid', data.data.openid);
         }
       })
-
-
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting["scope.record"]) {
-          wx.authorize({
-            scope: "scope.record",
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              wx.startRecord();
-            }
-          });
-        } else {
-          wx.authorize({
-            scode: "scope.userInfo",
-            success: () => {
-              wx.getUserInfo();
-            },
-            fail: () => {
-              wx.openSetting();
-            }
-          });
-        }
-        // console.log(res)
-      }
-    });
   },
 
     methods: {

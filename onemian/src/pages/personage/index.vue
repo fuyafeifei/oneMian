@@ -4,7 +4,7 @@
             <div class="wrapImg">
                 <img src="../../../static/images/user.png" alt="" />
             </div>
-            <div class="wrapUser">************</div>
+            <div class="wrapUser">{{phoneNumber}}</div>
         </div>
         <div class="wrap">
             <div class="wrapItem">
@@ -16,8 +16,15 @@
                 <icon type="info" size="18"></icon>
                 <div>客服中心</div>
                 <p>></p>
-            </div>
+            </div>     
         </div>
+        <div v-if="!hasPhone">
+              <button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">授权手机号</button>
+        </div>
+        <div>
+            <button v-if="showSetting" open-type="openSetting">打开设置页</button>
+        </div>
+       
     </div>
 </template>
 
@@ -28,13 +35,51 @@ export default {
         
     },
 
-    data () {
-        return {
-        }
-    },
+    // data () {
+    //     return {
+    //         hasPhone:false,
+    //         showSetting:false,
+    //         phhoneNumber:''
+    //     }
+    // },
+//    methods:{
 
-    created () {
-    }
+//        getPhoneNumber(e){
+//            console.log(e,e.target.errMsg)
+//            if(e.target.errMsg != 'getPhoneNumber:fail user deny'){
+//                // 用户授权成功
+//                let data =  encryptData({
+//                    encryptData:e.target.encryptedData,
+//                    iv:e.target.iv
+//                })
+//                this.phoneNumber = data.data.phoneNumber
+//            }else{
+//                // 用户授权失败,打开设置页面
+//               this.showSetting = true
+//            }
+//        } 
+//     },  
+
+    // created () {
+    //     // 获取已授权状态
+    //     wx.getSetting({
+    //         success(res){
+    //             console.log(res.authSetting)
+    //             if(res.authSetting['scope.userInfo']){
+    //                 // 用户已授权
+    //                 wx.getUserInfo({
+    //                   withCredentials: true,
+    //                   success: res => {
+    //                         // 调用api获取用户信息
+    //                         console.log(res)
+    //                   },
+    //                 });
+    //             }else{
+    //                 // 用户没有授权
+    //             }
+    //         }
+    //     })
+    // },
 }
 </script>
 
