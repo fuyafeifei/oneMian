@@ -1,10 +1,12 @@
 {
     "pages": [
         "pages/index/main",
-        "pages/list/main",
+        "pages/logs/main",
+        "pages/counter/main",
         "pages/address/main",
-        "pages/addInterview/main",
-        "pages/personage/main"
+        "pages/order/main",
+        "pages/carding/main",
+        "pages/card/main"
     ],
     "permission": {
         "scope.userLocation": {

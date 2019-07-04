@@ -1,51 +1,38 @@
 <template>
     <div class="wrapper">
         <div class="top">
-            <map 
-                id="map" 
-                :longitude="longitude" 
-                :latitude="latitude" 
-                scale="14"  
-                subkey="X7RBZ-MMOKR-UQEWJ-WSCXC-IVXVK-IFFLL"
-                show-location="true"
-                style="width: 100%; height: 100%;">
-            </map>
-            <div class="poto">
-                <div class="potoItem">
-                    <img src="../../../static/images/location.png" alt="" />
-                </div>
-                <div class="potoItem potoBack">
-                    <img @click="btnList" src="../../../static/images/my.png" alt="" />
-                </div>
-                
-            </div>
+            <Map></Map>
         </div>
-        <button @click="jump">添加面试</button>
+        <cover-view class="current">
+            <button class="add" @tap="jump">添加面试</button>
+            <button class="my" @tap="comeTo">
+                <cover-image src="/static/images/my.png"/>
+            </button>
+        </cover-view>
     </div>
 </template>
 
 <script>
 import QQMapWX from '@/utils/qqMapWX';
 import { mapState, mapActions } from 'vuex';
+import Map from '@/components/card';
 export default {
+    components:{
+        Map
+    },
+
     data(){
         return {
         }
     },
 
     computed:{
-        ...mapState({
-            longitude:state=>state.index.longitude,
-            latitude: state=>state.index.latitude
-        })
     },
 
     created(){
-
         let qqmapsdk = new QQMapWX({
             key: 'X7RBZ-MMOKR-UQEWJ-WSCXC-IVXVK-IFFLL'
         });
-
         this.getLocation();
     },
 
@@ -53,27 +40,24 @@ export default {
         ...mapActions({
             getLocation:"index/getLocation"
         }),
-
         jump(){
             wx.navigateTo({
-                url:"/pages/addInterview/main"
+                url:"/pages/counter/main"
             })
         },
-
-        btnList(){
-                wx.navigateTo({
-                    url:"/pages/personage/main"
-                })
+        comeTo(){
+            wx.navigateTo({
+                url:"/pages/logs/main"
+            })
+        },
+        local(){
+            this.getLocation();
         }
     }
 }
 </script>
 
-<style>
-page{
-    width: 100%;
-    height: 100%;
-}
+<style scoped>
 .wrapper{
     width: 100%;
     height: 100%;
@@ -82,7 +66,7 @@ page{
 }
 .top{
     width: 100%;
-    flex:1;
+    height: 100%;
 }
 .poto{
     width: 100%;
@@ -95,23 +79,40 @@ page{
     padding:0 40rpx;
     box-sizing:border-box;
 }
-.potoItem{
-    width:80rpx;
-    height:80rpx;
-    border-radius: 100%;
-}
-.potoItem img{
+.current{
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
-    border-radius: 100%;
+    height: 240rpx;
 }
-.potoBack{
-    background:#000;
-}
-button{
+.add{
+    position: fixed;
     width: 100%;
-    height:100rpx;
-    background:#000;
-    color:#fff;
+    height: 100rpx;
+    background: #000;
+    color: #fff;
+    font-weight: 500;
+    bottom: 0;
+    left: 0;
+    font-size: 40rpx;
+}
+.my{
+    position: fixed;
+    display: inline-block;
+    bottom: 150rpx;
+    right: 0;
+    width: 120rpx;
+    height: 100rpx;
+    border:none;
+    background: rgba(0, 0, 0, 0)
+}
+cover-image{
+    width: 80rpx;
+    height: 80rpx;
+    margin-top: 10rpx;
+    margin-left: 10rpx;
+    background: #000;
+    border-radius: 50%;
 }
 </style>
